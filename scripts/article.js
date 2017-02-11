@@ -22,14 +22,13 @@ Article.prototype.toHtml = function() {
 
   return template(this);
 };
+  rawData.sort(function(a,b) {
+    return (new Date(b.publishedOn)) - (new Date(a.publishedOn));
+  });
 
-rawData.sort(function(a,b) {
-  return (new Date(b.publishedOn)) - (new Date(a.publishedOn));
-});
-
-rawData.forEach(function(ele) {
-  articles.push(new Article(ele));
-})
+  rawData.forEach(function(ele) {
+    articles.push(new Article(ele));
+  })
 
 articles.forEach(function(a){
   $('#articles').append(a.toHtml())
