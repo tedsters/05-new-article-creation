@@ -68,11 +68,12 @@ articleView.setTeasers = function() {
 
 articleView.initNewArticlePage = function() {
   // DONE: Ensure the main .tab-content area is revealed. We might add more tabs later.
-$('.tab-content').show();
+  $('.tab-content').show();
 
   // DONE: The new articles we create will be copy/pasted into our source data file.
   // Set up this "export" functionality. We can hide it for now, and show it once we have data to export.
   $('#export-field').hide();
+
   $('#article-json').on('focus', function(){
     this.select();
   });
@@ -80,33 +81,38 @@ $('.tab-content').show();
   // DONE: Add an event handler to update the preview and the export field if any inputs change.
   $('#new-form').on('change', articleView.create);
 
+};
+
 articleView.create = function() {
   // DONE: Set up a var to hold the new article we are creating.
   // Clear out the #articles element, so we can put in the updated preview
   var article;
-  $('#article-preview').empty();
+  $('#articles-preview').empty();
+
 
   // DONE: Instantiate an article based on what's in the form fields:
   article = new Article({
-  author: $('#article-author').val(),
-  authorUrl: $('#article-author-url').val(),
-  title: $('#article-title').val(),
-  category: $('#article-categorty').val(),
-  body: $('#article-body').val(),
-  publishedOn: $('#article-published:checked').length ? new Date() : null
+    author: $('#article-author').val(),
+    authorUrl: $('#article-author-url').val(),
+    title: $('#article-title').val(),
+    category: $('#article-category').val(),
+    body: $('#article-body').val(),
+    publishedOn: $('#article-published:checked').length ? new Date() : null,
   });
 
+
   // DONE: Use our interface to the Handblebars template to put this new article into the DOM:
-  $('#article-preview').append(article.toHtml());
+  $('#articles-preview').append(article.toHtml());
 
   // DONE: Activate the highlighting of any code blocks:
   $('pre code').each(function(i, block) {
     hljs.highlightBlock(block);
   });
-}
+
   // DONE: Show our export field, and export the new article as JSON, so it's ready to copy/paste into blogArticles.js:
   $('#export-field').show();
-  $('#article-json').val(JSON.stringify('article') + ',');
+  $('#article-json').val(JSON.stringify(article) + ',');
+
 };
 
 
